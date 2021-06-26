@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { View, TouchableOpacity, Image, Text } from 'react-native';
@@ -7,25 +7,40 @@ import logoImg from './../../assets/logo.png'
 
 import styles from './styles';
 
+import { CustomModal } from '../../components/CustomModal';
+
 export default function Detail() {
   const navigation = useNavigation()
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const value = 1120
+
+  function validValue(value) {
+    if (value > 100) return "Valor maior que 100"
+    else return "Valor menor que 100"
+  }
+
+  function handleShowModal(showModal) {
+    setModalVisible(showModal);
+    console.log(showModal);
+  }
 
   function navigateBack() {
     navigation.goBack()
   }
 
-  return(
+  return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image source={logoImg}/>
+        <Image source={logoImg} />
 
         <TouchableOpacity onPress={navigateBack}>
-          <Feather name="arrow-left" size={28} color="#e82041"/>
+          <Feather name="arrow-left" size={28} color="#e82041" />
         </TouchableOpacity>
       </View>
 
       <View style={styles.incident}>
-        <Text style={[styles.incidentProperty, {marginTop: 0}]}>ONG: </Text>
+        <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG: </Text>
         <Text style={styles.incidentValue}>APAD: </Text>
 
         <Text style={styles.incidentProperty}>Caso: </Text>
@@ -42,15 +57,18 @@ export default function Detail() {
         <Text style={styles.heroDescription}>Entre em contato:</Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.action} onPress={() => {}}>
+          <TouchableOpacity style={styles.action} onPress={() => { handleShowModal(modalVisible ? false : true) }}>
             <Text style={styles.actionText}>WhatsApp</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.action} onPress={() => {}}>
+          <TouchableOpacity style={styles.action} onPress={() => { }}>
             <Text style={styles.actionText}>Email</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      <CustomModal showModal={modalVisible} text={validValue(value)} />
+
     </View>
   )
 }
