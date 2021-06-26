@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { View, TouchableOpacity, Image, Text } from 'react-native';
@@ -20,14 +20,14 @@ export default function Detail() {
     else return "Valor menor que 100"
   }
 
-  function handleShowModal(showModal) {
-    setModalVisible(showModal);
-    console.log(showModal);
+  function handleShowModal() {
+    setModalVisible(modalVisible ? false : true);
   }
 
   function navigateBack() {
     navigation.goBack()
   }
+
 
   return (
     <View style={styles.container}>
@@ -57,7 +57,7 @@ export default function Detail() {
         <Text style={styles.heroDescription}>Entre em contato:</Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.action} onPress={() => { handleShowModal(modalVisible ? false : true) }}>
+          <TouchableOpacity style={styles.action} onPress={() => { handleShowModal() }}>
             <Text style={styles.actionText}>WhatsApp</Text>
           </TouchableOpacity>
 
